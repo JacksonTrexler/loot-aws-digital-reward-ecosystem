@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Loot | AWS Digital Reward Ecosystem</title>
+  <meta name="description" content="Single-page overview of the Loot AWS-native digital reward ecosystem for consumers, investors, and AWS Activate reviewers." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=DM+Serif+Display&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --text-xs:   clamp(0.75rem, 0.7rem + 0.25vw, 0.875rem);
+      --text-sm:   clamp(0.875rem, 0.8rem + 0.35vw, 1rem);
+      --text-base: clamp(1rem, 0.95rem + 0.25vw, 1.125rem);
+      --text-lg:   clamp(1.125rem, 1rem + 0.75vw, 1.5rem);
+      --text-xl:   clamp(1.5rem, 1.2rem + 1.25vw, 2.25rem);
+      --text-2xl:  clamp(2rem, 1.2rem + 2.5vw, 3.5rem);
+      --space-1:  0.25rem;  --space-2: 0.5rem;  --space-3: 0.75rem;  --space-4: 1rem;
+      --space-5:  1.25rem;  --space-6: 1.5rem;  --space-8: 2rem;   --space-10: 2.5rem;
+      --space-12: 3rem;     --space-16: 4rem;   --space-20: 5rem;  --space-24: 6rem;
+      --color-bg: #050608;
+      --color-surface: #0b0d12;
+      --color-surface-2: #11141b;
+      --color-surface-alt: #151924;
+      --color-border: #242a39;
+      --color-text: #f5f5f7;
+      --color-text-muted: #989ba5;
+      --color-primary: #34d399;
+      --color-primary-soft: rgba(52,211,153,0.14);
+      --color-danger: #fb7185;
+      --radius-sm: 0.375rem;
+      --radius-md: 0.5rem;
+      --radius-lg: 0.9rem;
+      --radius-full: 9999px;
+      --shadow-soft: 0 18px 60px rgba(0,0,0,0.55);
+      --max-width: 1120px;
+      --nav-blur: blur(18px);
+      --transition-fast: 160ms cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      min-height: 100vh;
+      font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      font-size: var(--text-base);
+      line-height: 1.6;
+      color: var(--color-text);
+      background: radial-gradient(circle at top left, #1e293b 0, #020617 40%, #000000 100%);
+      background-attachment: fixed;
+      text-rendering: optimizeLegibility;
+      -webkit-font-smoothing: antialiased;
+    }
+    main { padding-bottom: var(--space-24); }
+    .shell {
+      max-width: var(--max-width);
+      margin-inline: auto;
+      padding-inline: var(--space-4);
+    }
+    header.site-header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      backdrop-filter: var(--nav-blur);
+      background: linear-gradient(to bottom, rgba(0,0,0,0.78), rgba(0,0,0,0.32));
+      border-bottom: 1px solid rgba(148,163,184,0.18);
+    }
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-4);
+      padding-block: var(--space-3);
+    }
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+    }
+    .brand-mark {
+      width: 32px;
+      height: 32px;
+      border-radius: 40% 60% 50% 50%;
+      background: radial-gradient(circle at 30% 20%, #e5fffb 0, #34d399 18%, #22c55e 45%, #0f172a 90%);
+      box-shadow:
+        0 0 0 1px rgba(15,23,42,0.9),
+        0 15px 40px rgba(16,185,129,0.45);
+      position: relative;
+      overflow: hidden;
+    }
+    .brand-mark::after {
+      content: '';
+      position: absolute;
+      inset: 35% -10% auto;
+      height: 40%;
+      background: radial-gradient(circle at 50% 0, rgba(15,23,42,0.1), rgba(15,23,42,0.9));
+      mix-blend-mode: soft-light;
+    }
+    .brand-text-main {
+      font-family: 'DM Serif Display', ui-serif, Georgia, serif;
+      letter-spacing: 0.04em;
+      font-size: var(--text-lg);
+    }
+    .brand-text-sub {
+      font-size: var(--text-xs);
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: var(--color-text-muted);
+    }
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: var(--space-4);
+      font-size: var(--text-sm);
+    }
+    nav a {
+      color: var(--color-text-muted);
+      text-decoration: none;
+      position: relative;
+      padding-block: 0.1rem;
+    }
+    nav a::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: -0.15rem;
+      width: 0;
+      height: 2px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #34d399, #22c55e);
+      transition: width var(--transition-fast);
+    }
+    nav a:hover,
+    nav a:focus-visible {
+      color: #e5e7eb;
+    }
+    nav a:hover::after,
+    nav a:focus-visible::after {
+      width: 100%;
+    }
+    .pill {
+      font-size: var(--text-xs);
+      padding: 0.2rem 0.7rem;
+      border-radius: var(--radius-full);
+      border: 1px solid rgba(148,163,184,0.5);
+      color: #e5e7eb;
+      background: radial-gradient(circle at 0 0, rgba(34,197,94,0.4), rgba(15,23,42,0.9));
+      box-shadow: 0 0 0 1px rgba(15,23,42,0.9);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+    .pill-dot {
+      width: 0.5rem;
+      height: 0.5rem;
+      border-radius: 999px;
+      background: #22c55e;
+      box-shadow: 0 0 0 4px rgba(34,197,94,0.35);
+    }
+    .hero {
+      padding-block: var(--space-12) var(--space-16);
+    }
+    .hero-inner {
+      display: grid;
+      grid-template-columns: minmax(0, 3fr) minmax(0, 2.2fr);
+      gap: var(--space-10);
+      align-items: center;
+    }
+    .hero h1 {
+      font-family: 'DM Serif Display', ui-serif, Georgia, serif;
+      font-size: clamp(2.4rem, 3vw + 1.6rem, 3.6rem);
+      line-height: 1.08;
+      letter-spacing: 0.02em;
+      margin-top: var(--space-4);
+      margin-bottom: var(--space-4);
+      text-wrap: balance;
+    }
+    .hero h1 span.accent {
+      background: linear-gradient(120deg, #34d399, #22c55e, #a855f7);
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+    .hero-lead {
+      color: var(--color-text-muted);
+      max-width: 32rem;
+      font-size: var(--text-base);
+    }
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-3);
+      margin-top: var(--space-6);
+      align-items: center;
+    }
+    .btn {
+      position: relative;
+      border-radius: var(--radius-full);
+      border: 1px solid transparent;
+      padding: 0.6rem 1.4rem;
+      font-size: var(--text-sm);
+      font-weight: 500;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      text-decoration: none;
+      cursor: pointer;
+      transition: transform var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast), background var(--transition-fast);
+      white-space: nowrap;
+    }
+    .btn-primary {
+      background: radial-gradient(circle at 0 0, #4ade80, #22c55e 45%, #16a34a 80%);
+      color: #022c22;
+      box-shadow: 0 14px 40px rgba(34,197,94,0.4);
+    }
+    .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 20px 55px rgba(34,197,94,0.45); }
+    .btn-ghost {
+      background: rgba(15,23,42,0.85);
+      border-color: rgba(148,163,184,0.55);
+      color: #e5e7eb;
+    }
+    .btn-ghost:hover { border-color: rgba(148,163,184,0.85); background: rgba(15,23,42,0.95); }
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-4);
+      margin-top: var(--space-4);
+      font-size: var(--text-xs);
+      color: var(--color-text-muted);
+    }
+    .hero-meta strong { color: #e5e7eb; font-weight: 500; }
+    .hero-panel {
+      position: relative;
+      border-radius: 1.4rem;
+      padding: var(--space-5);
+      background: radial-gradient(circle at top, rgba(52,211,153,0.18), transparent 55%), radial-gradient(circle at bottom right, rgba(56,189,248,0.18), transparent 55%), linear-gradient(to bottom right, rgba(15,23,42,0.98), rgba(15,23,42,0.9));
+      border: 1px solid rgba(148,163,184,0.35);
+      box-shadow: var(--shadow-soft);
+      overflow: hidden;
+    }
+    .hero-panel::before {
+      content: '';
+      position: absolute;
+      inset: -40%;
+      background:
+        radial-gradient(circle at top left, rgba(52,211,153,0.2), transparent 60%),
+        radial-gradient(circle at bottom right, rgba(129,140,248,0.25), transparent 65%);
+      opacity: 0.7;
+      filter: blur(40px);
+      z-index: -1;
+    }
+    .hero-panel-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-2);
+      margin-bottom: var(--space-3);
+      font-size: var(--text-xs);
+      color: var(--color-text-muted);
+    }
+    .hero-pill {
+      display: inline-flex;
+      gap: 0.3rem;
+      align-items: center;
+      padding: 0.2rem 0.6rem;
+      border-radius: var(--radius-full);
+      background: rgba(15,23,42,0.7);
+      border: 1px solid rgba(148,163,184,0.45);
+    }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: var(--space-3);
+    }
+    .hero-card {
+      padding: var(--space-3);
+      border-radius: var(--radius-md);
+      background: rgba(15,23,42,0.85);
+      border: 1px solid rgba(148,163,184,0.35);
+      font-size: var(--text-xs);
+    }
+    .hero-card h3 { font-size: var(--text-sm); margin-bottom: 0.2rem; }
+    .hero-kpi {
+      display: flex;
+      align-items: baseline;
+      gap: 0.2rem;
+      font-variant-numeric: tabular-nums;
+      margin-top: 0.1rem;
+    }
+    .hero-kpi-main { font-size: 1.25rem; font-weight: 600; }
+    .hero-kpi-sub { font-size: var(--text-xs); color: var(--color-text-muted); }
+    .badge-soft {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.1rem 0.55rem;
+      border-radius: var(--radius-full);
+      background: rgba(15,23,42,0.85);
+      border: 1px solid rgba(52,211,153,0.4);
+      font-size: var(--text-xs);
+      color: #bbf7d0;
+    }
+    .section {
+      padding-block: var(--space-16);
+      border-top: 1px solid rgba(15,23,42,0.85);
+    }
+    .section-header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: var(--space-3);
+      margin-bottom: var(--space-6);
+    }
+    .section-eyebrow {
+      font-size: var(--text-xs);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--color-text-muted);
+    }
+    .section-title { font-size: var(--text-xl); font-weight: 600; letter-spacing: 0.02em; }
+    .section-subtitle { color: var(--color-text-muted); max-width: 36rem; font-size: var(--text-sm); }
+    .two-col {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+      gap: var(--space-10);
+      align-items: flex-start;
+    }
+    .list {
+      list-style: none;
+      display: grid;
+      gap: var(--space-4);
+    }
+    .list-item {
+      display: flex;
+      gap: var(--space-3);
+    }
+    .list-icon {
+      width: 1.8rem;
+      height: 1.8rem;
+      border-radius: var(--radius-md);
+      background: rgba(15,23,42,0.95);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid rgba(148,163,184,0.4);
+      flex-shrink: 0;
+      font-size: 0.9rem;
+    }
+    .list-body h3 { font-size: var(--text-sm); font-weight: 500; margin-bottom: 0.2rem; }
+    .list-body p { font-size: var(--text-sm); color: var(--color-text-muted); }
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: var(--space-4);
+    }
+    .card {
+      padding: var(--space-4);
+      border-radius: var(--radius-lg);
+      background: radial-gradient(circle at top left, rgba(15,23,42,0.9), rgba(15,23,42,0.98));
+      border: 1px solid rgba(148,163,184,0.35);
+      box-shadow: 0 18px 45px rgba(15,23,42,0.85);
+      font-size: var(--text-sm);
+    }
+    .card-kicker { font-size: var(--text-xs); text-transform: uppercase; letter-spacing: 0.12em; color: var(--color-text-muted); margin-bottom: 0.35rem; }
+    .card-title { font-weight: 500; margin-bottom: 0.3rem; }
+    .card p { color: var(--color-text-muted); }
+    .tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+      margin-top: var(--space-3);
+    }
+    .tag {
+      font-size: var(--text-xs);
+      padding: 0.15rem 0.55rem;
+      border-radius: var(--radius-full);
+      border: 1px solid rgba(148,163,184,0.4);
+      color: var(--color-text-muted);
+      background: rgba(15,23,42,0.85);
+    }
+    .tag-primary {
+      border-color: rgba(52,211,153,0.7);
+      color: #bbf7d0;
+      background: rgba(22,163,74,0.16);
+    }
+    .kpi-row {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: var(--space-4);
+      margin-top: var(--space-4);
+      font-variant-numeric: tabular-nums;
+    }
+    .kpi {
+      padding: var(--space-3);
+      border-radius: var(--radius-md);
+      background: rgba(15,23,42,0.9);
+      border: 1px solid rgba(15,23,42,0.95);
+      box-shadow: 0 12px 30px rgba(0,0,0,0.65);
+    }
+    .kpi-label { font-size: var(--text-xs); color: var(--color-text-muted); margin-bottom: 0.1rem; }
+    .kpi-main { font-size: 1.15rem; font-weight: 600; }
+    .kpi-note { font-size: var(--text-xs); color: var(--color-text-muted); margin-top: 0.15rem; }
+    .risk-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: var(--space-4);
+      margin-top: var(--space-4);
+      font-size: var(--text-sm);
+    }
+    .risk {
+      padding: var(--space-4);
+      border-radius: var(--radius-lg);
+      background: rgba(15,23,42,0.94);
+      border: 1px solid rgba(248,113,113,0.45);
+      box-shadow: 0 20px 55px rgba(127,29,29,0.6);
+    }
+    .risk h3 { font-size: var(--text-sm); font-weight: 600; margin-bottom: 0.2rem; }
+    .risk small { display: block; font-size: var(--text-xs); color: #fecaca; margin-bottom: 0.3rem; }
+    .risk p { color: var(--color-text-muted); }
+    .layout-toggle {
+      display: inline-flex;
+      padding: 0.18rem;
+      border-radius: var(--radius-full);
+      border: 1px solid rgba(148,163,184,0.55);
+      background: rgba(15,23,42,0.9);
+      gap: 0.15rem;
+    }
+    .layout-toggle button {
+      border-radius: var(--radius-full);
+      border: none;
+      padding: 0.25rem 0.7rem;
+      font-size: var(--text-xs);
+      color: var(--color-text-muted);
+      background: transparent;
+      cursor: pointer;
+      transition: background var(--transition-fast), color var(--transition-fast);
+    }
+    .layout-toggle button.active {
+      background: rgba(15,23,42,0.98);
+      color: #e5e7eb;
+    }
+    .view[data-view="consumer"] [data-role="investor"],
+    .view[data-view="investor"] [data-role="consumer"] {
+      display: none;
+    }
+    .aws-callout {
+      margin-top: var(--space-4);
+      padding: var(--space-4);
+      border-radius: var(--radius-lg);
+      background: rgba(15,23,42,0.9);
+      border: 1px solid rgba(96,165,250,0.5);
+      font-size: var(--text-sm);
+    }
+    .aws-callout h3 { font-size: var(--text-sm); font-weight: 500; margin-bottom: 0.3rem; }
+    .aws-callout ul { margin-top: 0.6rem; padding-left: 1rem; }
+    .aws-callout li { color: var(--color-text-muted); margin-bottom: 0.18rem; font-size: var(--text-xs); }
+    footer {
+      padding-block: var(--space-10) var(--space-6);
+      border-top: 1px solid rgba(15,23,42,0.9);
+      color: var(--color-text-muted);
+      font-size: var(--text-xs);
+      text-align: center;
+    }
+    footer a { color: var(--color-primary); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+    @media (max-width: 900px) {
+      .hero-inner { grid-template-columns: minmax(0, 1fr); }
+      .hero-panel { order: -1; }
+      .section { padding-block: var(--space-12); }
+      .two-col { grid-template-columns: minmax(0, 1fr); gap: var(--space-6); }
+      .card-grid, .kpi-row, .risk-grid { grid-template-columns: minmax(0, 1fr); }
+      nav ul { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="shell nav-inner">
+      <a href="#top" class="brand">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span>
+          <div class="brand-text-main">Loot</div>
+          <div class="brand-text-sub">Digital Reward Ecosystem</div>
+        </span>
+      </a>
+      <nav aria-label="Primary">
+        <ul>
+          <li><a href="#problem">Problem</a></li>
+          <li><a href="#solution">Solution</a></li>
+          <li><a href="#model">Model</a></li>
+          <li><a href="#aws">AWS-native</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top" class="view" data-view="investor">
+    <section class="hero shell">
+      <div class="hero-inner">
+        <div>
+          <div class="pill" aria-label="Pre-seed concept, AWS-native">
+            <span class="pill-dot"></span>
+            <span>Concept-stage · AWS-native · Consumer loyalty</span>
+          </div>
+          <h1>
+            A programmable reward layer for <span class="accent">digital loot</span> across apps and games.
+          </h1>
+          <p class="hero-lead">
+            Loot turns one-off coupons and points into interoperable, on-chain rewards that brands, creators, and platforms can issue, track, and redeem without building their own web3 stack.
+          </p>
+          <div class="hero-actions">
+            <button class="btn btn-primary" data-scroll="#solution">Explore product story</button>
+            <button class="btn btn-ghost" data-scroll="#aws">View AWS & credits fit</button>
+            <div class="layout-toggle" aria-label="Toggle view">
+              <button type="button" class="active" data-switch-view="investor">Investor / AWS</button>
+              <button type="button" data-switch-view="consumer">Consumer view</button>
+            </div>
+          </div>
+          <div class="hero-meta">
+            <span><strong>Ask:</strong> pre-seed design & build time; AWS Activate Founders credits.</span>
+            <span><strong>Instrument:</strong> simple agreement for future equity (SAFE) or studio-style build partnership.</span>
+          </div>
+        </div>
+        <aside class="hero-panel" aria-label="High-level metrics & architecture sketch">
+          <div class="hero-panel-header">
+            <span>Loot reward rail · v0 concept</span>
+            <span class="hero-pill">AWS-native · serverless first</span>
+          </div>
+          <div class="hero-grid">
+            <div class="hero-card" data-role="investor">
+              <h3>Unit outline</h3>
+              <p>Digital item → claim URL → wallet or email → verifiable redemption.</p>
+              <div class="hero-kpi">
+                <span class="hero-kpi-main">$0.01–$0.05</span>
+                <span class="hero-kpi-sub">per issued reward (infra + margin)</span>
+              </div>
+            </div>
+            <div class="hero-card" data-role="consumer">
+              <h3>Player feeling</h3>
+              <p>“My loot actually matters across games and apps, not just in one account.”</p>
+            </div>
+            <div class="hero-card">
+              <h3>Initial targets</h3>
+              <p>Indie games, digital collectibles, and small SaaS tools issuing perks or credits.</p>
+              <span class="badge-soft">TAM: rewards & loyalty infra</span>
+            </div>
+            <div class="hero-card">
+              <h3>Architecture slice</h3>
+              <p>AWS Lambda, API Gateway, DynamoDB, Cognito, and managed blockchain / wallets.</p>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section id="problem" class="section shell">
+      <div class="section-header">
+        <div>
+          <div class="section-eyebrow">Why Loot exists</div>
+          <h2 class="section-title">Reward sprawl without a shared rail.</h2>
+        </div>
+        <p class="section-subtitle">
+          Consumers juggle app-specific points and one-off promo codes. Brands and indie builders lack the time and trust surface to wire up web3-native rewards safely.
+        </p>
+      </div>
+      <div class="two-col">
+        <div>
+          <ul class="list">
+            <li class="list-item">
+              <div class="list-icon">1</div>
+              <div class="list-body">
+                <h3>Isolated loyalty islands</h3>
+                <p>
+                  Each product runs its own points or promo codes. Nothing moves across brands, games, or tools, so perceived value decays quickly.
+                </p>
+              </div>
+            </li>
+            <li class="list-item">
+              <div class="list-icon">2</div>
+              <div class="list-body">
+                <h3>Heavy web3 integration tax</h3>
+                <p>
+                  Wallet UX, custody choices, fraud controls, and on-chain state are all table stakes, but out of scope for most small teams.
+                </p>
+              </div>
+            </li>
+            <li class="list-item">
+              <div class="list-icon">3</div>
+              <div class="list-body">
+                <h3>Regulatory and risk anxiety</h3>
+                <p>
+                  Teams worry about compliance, money transmission, tax exposure, and chain risk even when issuing simple non-cash perks.
+                </p>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <aside>
+          <div class="card">
+            <div class="card-kicker">Opportunity</div>
+            <div class="card-title">A clean reward API for digital loot.</div>
+            <p>
+              Loot abstracts reward issuance, ownership, and redemption into one opinionated rail that apps and games call over HTTPS, without managing keys or ledgers directly.
+            </p>
+            <div class="tag-row">
+              <span class="tag tag-primary">API-first</span>
+              <span class="tag">Consent-aware identity</span>
+              <span class="tag">On-chain optionality</span>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section id="solution" class="section shell">
+      <div class="section-header">
+        <div>
+          <div class="section-eyebrow">Product sketch</div>
+          <h2 class="section-title">A simple programmable reward rail.</h2>
+        </div>
+        <p class="section-subtitle">
+          For consumers, Loot feels like a unified vault of items and perks. For builders, it is an AWS-hosted API that issues, tracks, and settles digital rewards with clear cost envelopes.
+        </p>
+      </div>
+      <div class="two-col">
+        <div>
+          <ul class="list" data-role="consumer">
+            <li class="list-item">
+              <div class="list-icon">✓</div>
+              <div class="list-body">
+                <h3>One vault, many worlds</h3>
+                <p>Rewards from games, SaaS tools, and brands land in one Loot vault tied to your identity, not a single app login.</p>
+              </div>
+            </li>
+            <li class="list-item">
+              <div class="list-icon">✨</div>
+              <div class="list-body">
+                <h3>Loot that travels</h3>
+                <p>Items can unlock perks in partner apps or be burned for other rewards instead of expiring silently.</p>
+              </div>
+            </li>
+          </ul>
+          <ul class="list" data-role="investor">
+            <li class="list-item">
+              <div class="list-icon">A</div>
+              <div class="list-body">
+                <h3>Issue</h3>
+                <p>POST to Loot with reward type, metadata, and optional on-chain flag. Loot handles ID generation, storage, and optional mint.</p>
+              </div>
+            </li>
+            <li class="list-item">
+              <div class="list-icon">B</div>
+              <div class="list-body">
+                <h3>Own</h3>
+                <p>Rewards attach to user identities managed via Cognito plus optional wallet. Ownership is queryable and auditable.</p>
+              </div>
+            </li>
+            <li class="list-item">
+              <div class="list-icon">C</div>
+              <div class="list-body">
+                <h3>Redeem</h3>
+                <p>On redemption, Loot validates rules, marks state, and emits events for in-app fulfillment and accounting.</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <aside>
+          <div class="card">
+            <div class="card-kicker">Business model</div>
+            <div class="card-title">Usage-based API with clear floors.</div>
+            <p>
+              Charge per issued reward plus tiered platform fees once volume and partner count justify it. Keep infra anchored in AWS free and low tiers early on.
+            </p>
+            <div class="tag-row">
+              <span class="tag tag-primary">API calls</span>
+              <span class="tag">Reward issuance</span>
+              <span class="tag">Premium dashboards</span>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section id="model" class="section shell">
+      <div class="section-header">
+        <div>
+          <div class="section-eyebrow">For investors & partners</div>
+          <h2 class="section-title">Market logic, revenue levers, and risks.</h2>
+        </div>
+        <p class="section-subtitle">
+          The rewards and loyalty infra market is large and fragmented. Loot focuses on digital-native teams that want “Stripe for rewards” instead of running their own points and web3 stack.
+        </p>
+      </div>
+      <div class="card-grid">
+        <article class="card">
+          <div class="card-kicker">Market & wedge</div>
+          <h3 class="card-title">Start narrow: indie games and SaaS perks.</h3>
+          <p>
+            Early design partners are smaller teams issuing loot crates, cosmetic items, and SaaS perk bundles where shipping velocity matters more than building infra.
+          </p>
+          <div class="tag-row">
+            <span class="tag-primary tag">Indie / small</span>
+            <span class="tag">Digital goods</span>
+          </div>
+        </article>
+        <article class="card">
+          <div class="card-kicker">Monetization</div>
+          <h3 class="card-title">Usage-based rewards rail.</h3>
+          <p>
+            Charge per issued reward and per active integration, with optional premium analytics and segmentation tools layered on top.
+          </p>
+          <div class="tag-row">
+            <span class="tag">Per reward</span>
+            <span class="tag">Per partner</span>
+            <span class="tag">Insights</span>
+          </div>
+        </article>
+        <article class="card" data-role="investor">
+          <div class="card-kicker">Funding ask</div>
+          <h3 class="card-title">Pre-seed design + AWS credits.</h3>
+          <p>
+            Request: AWS Activate Founders credits + limited pre-seed capital or build-partner arrangement to design, prototype, and validate integrations with 3–5 pilot partners.
+          </p>
+          <div class="tag-row">
+            <span class="tag-primary tag">AWS Activate</span>
+            <span class="tag">Pre-seed</span>
+          </div>
+        </article>
+      </div>
+      <div class="kpi-row">
+        <div class="kpi">
+          <div class="kpi-label">Phase 0 goal</div>
+          <div class="kpi-main">3–5 pilots</div>
+          <div class="kpi-note">Indie games / SaaS tools issuing Loot-backed perks.</div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-label">Target gross margin</div>
+          <div class="kpi-main">65–75%</div>
+          <div class="kpi-note">On reward issuance and platform fees once volumes grow.</div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-label">Runway from credits</div>
+          <div class="kpi-main">12–18 months</div>
+          <div class="kpi-note">Using AWS Activate Founders to cover infra while validating demand.</div>
+        </div>
+      </div>
+      <div class="risk-grid">
+        <div class="risk">
+          <h3>Adoption risk</h3>
+          <small>Builders might stay with in-house points.</small>
+          <p>Mitigation: Ship SDKs, examples, and no-regrets analytics so Loot is faster than rolling a custom system.</p>
+        </div>
+        <div class="risk">
+          <h3>Regulatory drift</h3>
+          <small>Loyalty and web3 rules may tighten.</small>
+          <p>Mitigation: Start with non-cash perks, work with counsel, and keep chain-facing pieces modular.</p>
+        </div>
+        <div class="risk">
+          <h3>Platform dependency</h3>
+          <small>Heavy AWS reliance.</small>
+          <p>Mitigation: Lean into AWS-native services early, then abstract compute where it makes sense once product fit is clearer.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="aws" class="section shell">
+      <div class="section-header">
+        <div>
+          <div class="section-eyebrow">AWS-native rationale</div>
+          <h2 class="section-title">Designed to be a clean fit for AWS Activate.</h2>
+        </div>
+        <p class="section-subtitle">
+          Loot is intentionally small, serverless, and aligned with AWS Activate Founders: new, pre-Series B startup with a real product, company website, and AWS account in good standing.
+        </p>
+      </div>
+      <div class="two-col">
+        <div>
+          <div class="card">
+            <div class="card-kicker">Reference architecture</div>
+            <div class="card-title">Serverless, low-ops, AWS-first.</div>
+            <p>
+              Core stack: Amazon API Gateway, AWS Lambda, Amazon DynamoDB, Amazon Cognito, and optionally Amazon Managed Blockchain or partner wallet infra for on-chain state.
+            </p>
+            <div class="tag-row">
+              <span class="tag tag-primary">Serverless</span>
+              <span class="tag">Event-driven</span>
+              <span class="tag">Multi-tenant</span>
+            </div>
+          </div>
+          <div class="aws-callout">
+            <h3>How this lines up with Activate</h3>
+            <p>
+              AWS Activate Founders targets early-stage, self-funded startups with a functional website, AWS account, and product vision. Loot fits that profile and plans to use credits almost entirely on core services, not experimentation.</p>
+            <ul>
+              <li>Meets age and stage guidance for pre-Series B, sub-10-year companies.</li>
+              <li>Designed to keep infra within Activate Founders credit envelopes while validating product-market fit.</li>
+              <li>Clear story for AWS: more apps using more AWS services because Loot lowers the reward-rail barrier.</li>
+            </ul>
+          </div>
+        </div>
+        <aside>
+          <div class="card">
+            <div class="card-kicker">Credits usage plan</div>
+            <div class="card-title">Where AWS credits go.</div>
+            <p>
+              Primary spend is on Lambda, API Gateway, DynamoDB, Cognito, CloudWatch, and basic observability. No GPU or heavy compute until demand is proven.</p>
+            <div class="tag-row">
+              <span class="tag-primary tag">Low-ops infra</span>
+              <span class="tag">Usage metrics</span>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <footer class="shell">
+      <p>Concept SPA for the Loot AWS Digital Reward Ecosystem. Built to live on GitHub Pages as an investor / AWS overview and consumer explainer.</p>
+      <p style="margin-top:0.35rem;">Next steps: wire this repo to GitHub Pages, attach a custom domain, and link it as the public company site for AWS Activate.</p>
+    </footer>
+  </main>
+
+  <script>
+    document.querySelectorAll('[data-scroll]').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        var target = document.querySelector(btn.getAttribute('data-scroll'));
+        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
+    document.querySelectorAll('[data-switch-view]').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        var view = btn.getAttribute('data-switch-view');
+        var root = document.querySelector('main.view');
+        root.setAttribute('data-view', view);
+        document.querySelectorAll('[data-switch-view]').forEach(function(b) { b.classList.toggle('active', b === btn); });
+      });
+    });
+  </script>
+</body>
+</html>
